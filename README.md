@@ -16,6 +16,7 @@ A 6-bit minimal instruction set computer designed around using `NOR` as a univer
 |   10   |  `LOAD [reg] [reg]`  |  Loads data from the address `[reg, reg]` into `C`. |
 |   11   |  `STORE [reg] [reg]` |  Stores the value in `C` at the address `[reg, reg]`. |
 
+> [!Warning]
 > Negated OR is the only logic gate because fuck you...
 
 
@@ -65,13 +66,14 @@ Due to the limited nature of this CPU, it does not make sense to write raw machi
 I have instead written a compiled language with an expended instruction set; below is a list of instructions and their machine code equivalents:
 
 
-```D2
-! This is an example of a comment in the DIANA (extension: D2) compiled language.
+```DII
+! This is an example of a comment in the DIANA-II (extension: .DII) compiled language.
 PC 0x0 0x0
 ! Loop... Loop... Loop.. Loop..
 ```
 
-> **Note:** Instructions and regesters are uppercase because my 6-bit character encoding does not support lowercase...
+> [!Note]
+> Instructions and regesters are uppercase because my 6-bit character encoding does not support lowercase...
 
 
 <details>
