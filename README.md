@@ -102,6 +102,33 @@ The `MOVE` instruction is used to copy a value from the second register or immed
 </details>
 
 <details>
+  <summary><b><code> RSHIFT A </code></b></summary>
+&nbsp;
+
+This instruction shifts the bits in the provided register one position to the right, filling the leftmost bit with 0; the result is stored in `C`.
+
+> **Note:** This is done using the lookup table at `0xFC0..0xFFF`.
+
+**This can be done with:**
+
+1. `LOAD 11-11-11 A`
+
+2. `NOR C C`
+
+3. `NOR C 10-00-00`
+
+**Example:**
+```
+10-11-00
+11-11-11
+00-10-10
+00-10-11
+10-00-00
+```
+
+</details>
+
+<details>
   <summary><b><code> TEMPLATE </code></b></summary>
 &nbsp;
 
