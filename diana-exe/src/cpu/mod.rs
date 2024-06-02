@@ -1,6 +1,8 @@
 use crate::{
     error::Error,
     instructions::{Instruction, Operation, Register},
+    utils::tuple_as_usize,
+    Args,
 };
 use arbitrary_int::u6;
 
@@ -66,17 +68,31 @@ impl Cpu {
         Ok(())
     }
 
-    pub fn execute(&mut self, mut limit: Option<usize>) -> Result<(), Error> {
-        while let Some(mut value) = limit {
-            if value == 0 {
+    pub fn execute(&mut self, args: Args) -> Result<(), Error> {
+        let mut limit = args.limit;
+        loop {
+            if let Some(mut value) = limit {
+                if value == 0 {
+                    break;
+                }
+                value -= 1;
+                limit = Some(value);
+            }
+
+            self.cycle()?;
+
+            if tuple_as_usize(self.memory.pc.as_tuple()) >= args.break_point.unwrap() {
                 break;
             }
-            value -= 1;
-            limit = Some(value);
-            self.cycle()?;
         }
 
+        self.debug();
+
         Ok(())
+    }
+
+    pub fn debug(&self) {
+        println!("{:#?}", self);
     }
 }
 

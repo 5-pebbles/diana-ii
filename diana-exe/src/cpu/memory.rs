@@ -1,12 +1,8 @@
 use arbitrary_int::u6;
 
-use crate::{cpu::ProgramCounter, Error};
+use crate::{cpu::ProgramCounter, utils::tuple_as_usize, Error};
 
 const RAM_SIZE: usize = 3902;
-
-fn tuple_to_usize(tuple: (u6, u6)) -> usize {
-    ((u16::from(tuple.0) << 6) | u16::from(tuple.1)) as usize
-}
 
 pub struct Memory {
     pub pc: ProgramCounter,
@@ -25,7 +21,7 @@ impl Memory {
     }
 
     pub fn get(&self, index: (u6, u6)) -> Result<u6, Error> {
-        let address: usize = tuple_to_usize(index);
+        let address: usize = tuple_as_usize(index);
 
         Ok(match address {
             0x000..=0xF3D => self.ram[address],
@@ -38,7 +34,7 @@ impl Memory {
     }
 
     pub fn set(&mut self, index: (u6, u6), value: u6) -> Result<(), Error> {
-        let address: usize = tuple_to_usize(index);
+        let address: usize = tuple_as_usize(index);
 
         match address {
             0x000..=0xF3D => self.ram[address] = value,
