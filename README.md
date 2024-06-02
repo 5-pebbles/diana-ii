@@ -17,7 +17,7 @@ A 6-bit minimal instruction set computer designed around using `NOR` as a univer
 |   11   |  `STORE [reg] [reg]` |  Stores the value in `C` at the address `[reg, reg]`. |
 
 > [!Warning]
-> Negated OR is the only logic gate because fuck you...
+> This CPU is designed for hardware simplicity; your software problems are exactly that: **your** software problems.
 
 
 **Layout:**
