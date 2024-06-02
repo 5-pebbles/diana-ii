@@ -23,14 +23,17 @@ struct Args {
 
 fn main() -> Result<(), Error> {
     let args = Args::parse();
-    let instructions: Vec<u6> = args
-        .program
-        .as_bytes()
+
+    let mut bytes = args.program.into_bytes();
+    bytes.retain(|c| c == &b'1' || c == &b'0');
+
+    let instructions: Vec<u6> = bytes
         .chunks(6)
         .map(|chunk| {
             u6::new(u8::from_str_radix(str::from_utf8(chunk).unwrap(), 2).expect("Expected Binary"))
         })
         .collect();
+
     let mut cpu = Cpu::new(instructions);
     cpu.execute(args.limit)?;
     println!("{:#?}", cpu);
