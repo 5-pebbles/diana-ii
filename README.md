@@ -76,10 +76,33 @@ PC 0x0 0x0
 > Instructions and registers are uppercase because my 6-bit character encoding does not support lowercase...
 
 
-**Logic Operations:**
+**Logic Instructions:**
+
+<details>
+  <summary><b><code> NOT B </code></b></summary>
+&nbsp;
+
+This instruction flips all bits in the provided register.
+
+| p | NOT |
+|---|-----|
+| 1 |  0  |
+| 0 |  1  |
 
 
-**Arithmetic Operations:**
+**This can be done with:**
+
+1. `NOR B B`
+
+**Example:**
+```
+00-01-01
+```
+
+</details>
+
+
+**Arithmetic Instructions:**
 
 <details>
   <summary><b><code> LWRAP A </code></b></summary>
@@ -179,7 +202,7 @@ This instruction shifts the bits in the provided register one position to the ri
 </details>
 
 
-**Other Operations:**
+**Other Instructions:**
 
 <details>
   <summary><b><code> MOVE A 0xF </code></b></summary>
