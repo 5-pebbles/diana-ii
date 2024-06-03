@@ -125,6 +125,34 @@ This instruction shifts and wraps the bits in the provided register one position
 
 
 <details>
+  <summary><b><code> LSHIFT A </code></b></summary>
+&nbsp;
+
+This instruction shifts the bits in the provided register one position to the left, filling the rightmost bit with 0; the result is stored in `C`.
+
+> **Note:** This is done using the lookup table at `0xF80..=0xFBF`.
+
+**This can be done with:**
+
+1. `LOAD 11-11-10 A`
+
+2. `NOR C C`
+
+3. `NOR C 00-00-01`
+
+**Example:**
+```
+10-11-00
+11-11-10
+00-10-10
+00-10-11
+00-00-01
+```
+
+</details>
+
+
+<details>
   <summary><b><code> RWRAP A </code></b></summary>
 &nbsp;
 
