@@ -76,32 +76,10 @@ PC 0x0 0x0
 > Instructions and registers are uppercase because my 6-bit character encoding does not support lowercase...
 
 
-<details>
-  <summary><b><code> MOVE A 0xF </code></b></summary>
-&nbsp;
-
-The `MOVE` instruction is used to copy a value from the second register or immediate value to the first register.
+**Logic Operations:**
 
 
-**This can be done with:**
-
-1. `NOR A 11-11-11`
-
-2. `NOR A 0xF`
-
-3. `NOR A A`
-
-**Example:**
-```
-00-00-11
-11-11-11
-00-00-11
-00-11-11
-00-00-00
-```
-
-</details>
-
+**Arithmetic Operations:**
 
 <details>
   <summary><b><code> LWRAP A </code></b></summary>
@@ -196,6 +174,35 @@ This instruction shifts the bits in the provided register one position to the ri
 00-10-10
 00-10-11
 10-00-00
+```
+
+</details>
+
+
+**Other Operations:**
+
+<details>
+  <summary><b><code> MOVE A 0xF </code></b></summary>
+&nbsp;
+
+The `MOVE` instruction is used to copy a value from the second register or immediate value to the first register.
+
+
+**This can be done with:**
+
+1. `NOR A 11-11-11`
+
+2. `NOR A 0xF`
+
+3. `NOR A A`
+
+**Example:**
+```
+00-00-11
+11-11-11
+00-00-11
+00-11-11
+00-00-00
 ```
 
 </details>
