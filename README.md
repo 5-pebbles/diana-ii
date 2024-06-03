@@ -73,7 +73,7 @@ PC 0x0 0x0
 ```
 
 > [!Note]
-> Instructions and regesters are uppercase because my 6-bit character encoding does not support lowercase...
+> Instructions and registers are uppercase because my 6-bit character encoding does not support lowercase...
 
 
 <details>
@@ -104,12 +104,33 @@ The `MOVE` instruction is used to copy a value from the second register or immed
 
 
 <details>
+  <summary><b><code> LWRAP A </code></b></summary>
+&nbsp;
+
+This instruction shifts and wraps the bits in the provided register one position to the left; the resulting value is stored in `C`.
+
+> **Note:** This is done using the lookup table at `0xF80..=0xFBF`.
+
+**This can be done with:**
+
+1. `LOAD 11-11-10 A`
+
+**Example:**
+```
+10-11-00
+11-11-10
+```
+
+</details>
+
+
+<details>
   <summary><b><code> RWRAP A </code></b></summary>
 &nbsp;
 
 This instruction shifts and wraps the bits in the provided register one position to the right; the resulting value is stored in `C`.
 
-> **Note:** This is done using the lookup table at `0xFC0..0xFFF`.
+> **Note:** This is done using the lookup table at `0xFC0..=0xFFF`.
 
 **This can be done with:**
 
@@ -130,7 +151,7 @@ This instruction shifts and wraps the bits in the provided register one position
 
 This instruction shifts the bits in the provided register one position to the right, filling the leftmost bit with 0; the result is stored in `C`.
 
-> **Note:** This is done using the lookup table at `0xFC0..0xFFF`.
+> **Note:** This is done using the lookup table at `0xFC0..=0xFFF`.
 
 **This can be done with:**
 
