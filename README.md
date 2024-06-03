@@ -43,8 +43,8 @@ Each instruction is 6 bits in the format `[XX][YY][ZZ]`:
 
 There are a total of 4096 unique address each containing 6 bits.
 
-|    Address     |  Description  |
-|----------------|---------------|
+|     Address     |  Description  |
+|-----------------|---------------|
 | `0x000..=0xF3D` | General purpose RAM. |
 | `0xF3E..=0xF3F` | Program Counter(PC) (ROM). |
 | `0xF80..=0xFBF` | Left shift lookup table (ROM). |
