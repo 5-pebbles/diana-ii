@@ -102,6 +102,36 @@ This instruction flips all bits in the provided register.
 </details>
 
 
+<details>
+  <summary><b><code> OR A 0x4 </code></b></summary>
+&nbsp;
+
+This is instruction preforms a logical `OR` on the provide values storing the result in the first register.
+
+| p | q | OR |
+|---|---|----|
+| 1 | 1 | 1  |
+| 1 | 0 | 1  |
+| 0 | 1 | 1  |
+| 0 | 0 | 0  |
+
+
+**This can be done with:**
+
+1. `NOR A 0x4`
+
+2. `NOR A A`
+
+**Example:**
+```
+00-00-11
+00-01-00
+00-00-00
+```
+
+</details>
+
+
 **Arithmetic Instructions:**
 
 <details>
