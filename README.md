@@ -58,7 +58,7 @@ Due to the limited nature of this CPU, it does not make sense to write raw machi
 I've written a compiled language to aid development; however, it does not contain any abstractions that could hurt performance.
 
 > [!Warning]
-> Many instructions have **side effects** see:&nbsp; _**AND**_
+> Many instructions have **side effects** see:&nbsp; _**AND**_, _**NAND**_
 
 
 **Logic Instructions:**
@@ -116,6 +116,43 @@ This instruction performs a logical `AND` on the provided values, storing the re
 00-00-00
 00-01-01
 00-00-01
+```
+
+</details>
+
+
+<details>
+  <summary><b><code> NAND A B </code></b></summary>
+&nbsp;
+
+This instruction performs a logical `NAND` on the provided values, storing the result in the first register.
+
+**Warning:** The second register is flipped; its value can be restored with a `NOT` operation. If an immediate value is used, it is flipped at compile time.
+
+| p | q | AND |
+|---|---|-----|
+| 1 | 1 |  0  |
+| 1 | 0 |  1  |
+| 0 | 1 |  1  |
+| 0 | 0 |  1  |
+
+
+**This can be done with:**
+
+1. `NOR A A`
+
+2. `NOR B B`
+
+3. `NOR A B`
+
+4. `NOR A A`
+
+**Example:**
+```
+00-00-00
+00-01-01
+00-00-01
+00-00-00
 ```
 
 </details>
