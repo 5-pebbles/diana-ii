@@ -16,8 +16,8 @@ A 6-bit minimal instruction set computer designed around using `NOR` as a univer
 |   10   |  `LOAD [reg] [reg]`  |  Loads data from the address `[reg, reg]` into `C`. |
 |   11   |  `STORE [reg] [reg]` |  Stores the value in `C` at the address `[reg, reg]`. |
 
-> [!Warning]
-> This CPU is designed for hardware simplicity; your software problems are exactly that: **your** software problems.
+> [!Note]
+> Instructions and registers are uppercase because my 6-bit character encoding does not support lowercase...
 
 
 **Layout:**
@@ -53,27 +53,9 @@ There are a total of 4096 unique address each containing 6 bits.
 
 ## Language
 
-Truth table for NOR:
+Due to the limited nature of this CPU, it does not make sense to write raw machine code.
+I've written a compiled language to aid development; however, it does not contain any abstractions that could hurt performance.
 
-| p | q | NOR |
-|---|---|-----|
-| 1 | 1 |  0  |
-| 1 | 0 |  0  |
-| 0 | 1 |  0  |
-| 0 | 0 |  1  |
-
-Due to the limited nature of this CPU, it does not make sense to write raw machine code...
-I have instead written a compiled language with an expended instruction set; below is a list of instructions and their machine code equivalents:
-
-
-```DII
-! This is an example of a comment in the DIANA-II (extension: .DII) compiled language.
-PC 0x0 0x0
-! Loop... Loop... Loop.. Loop..
-```
-
-> [!Note]
-> Instructions and registers are uppercase because my 6-bit character encoding does not support lowercase...
 
 
 **Logic Instructions:**
@@ -106,7 +88,7 @@ This instruction flips all bits in the provided register.
   <summary><b><code> OR A 0x4 </code></b></summary>
 &nbsp;
 
-This is instruction preforms a logical `OR` on the provide values storing the result in the first register.
+This instruction performs a logical `OR` on the provided values, storing the result in the first register.
 
 | p | q | OR |
 |---|---|----|
