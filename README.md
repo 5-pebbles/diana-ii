@@ -175,6 +175,27 @@ This instruction shifts and wraps the bits in the provided register one position
 
 
 <details>
+  <summary><b><code> RWRAP A </code></b></summary>
+&nbsp;
+
+This instruction shifts and wraps the bits in the provided register one position to the right; the resulting value is stored in `C`.
+
+> **Note:** This is done using the lookup table at `0xFC0..=0xFFF`.
+
+**This can be done with:**
+
+1. `LOAD 11-11-11 A`
+
+**Example:**
+```
+10-11-00
+11-11-11
+```
+
+</details>
+
+
+<details>
   <summary><b><code> LSHIFT A </code></b></summary>
 &nbsp;
 
@@ -197,27 +218,6 @@ This instruction shifts the bits in the provided register one position to the le
 00-10-10
 00-10-11
 00-00-01
-```
-
-</details>
-
-
-<details>
-  <summary><b><code> RWRAP A </code></b></summary>
-&nbsp;
-
-This instruction shifts and wraps the bits in the provided register one position to the right; the resulting value is stored in `C`.
-
-> **Note:** This is done using the lookup table at `0xFC0..=0xFFF`.
-
-**This can be done with:**
-
-1. `LOAD 11-11-11 A`
-
-**Example:**
-```
-10-11-00
-11-11-11
 ```
 
 </details>
@@ -254,10 +254,10 @@ This instruction shifts the bits in the provided register one position to the ri
 **Other Instructions:**
 
 <details>
-  <summary><b><code> MOVE A 0xF </code></b></summary>
+  <summary><b><code> COPY A 0xF </code></b></summary>
 &nbsp;
 
-The `MOVE` instruction is used to copy a value from the second register or immediate value to the first register.
+The `COPY` instruction copies a value to the first register from the second register or an immediate value.
 
 
 **This can be done with:**
