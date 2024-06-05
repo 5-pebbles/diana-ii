@@ -188,6 +188,34 @@ This instruction performs a logical `OR` on the provided values, storing the res
 </details>
 
 
+<details>
+  <summary><b><code> NOR A C </code></b></summary>
+&nbsp;
+
+This instruction performs a logical `NOR` on the provided values, storing the result in the first register.
+
+> **Note:** It is the only logic instruction natively supported by the CPU.
+
+| p | q | NOR |
+|---|---|-----|
+| 1 | 1 |  0  |
+| 1 | 0 |  0  |
+| 0 | 1 |  0  |
+| 0 | 0 |  1  |
+
+
+**This can be done with:**
+
+1. `NOR A C`
+
+**Example:**
+```
+00-00-10
+```
+
+</details>
+
+
 **Arithmetic Instructions:**
 
 <details>
