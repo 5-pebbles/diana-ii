@@ -54,6 +54,7 @@ There are a total of 4096 unique address each containing 6 bits.
 ## Language
 
 Due to the limited nature of this CPU, it does not make sense to write raw machine code.
+
 I've written a compiled language to aid development; however, it does not contain any abstractions that could hurt performance.
 
 > [!Warning]
