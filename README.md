@@ -93,7 +93,7 @@ This instruction flips all bits in the provided register.
 
 This instruction performs a logical `AND` on the provided values, storing the result in the first register.
 
-**Warning:** The second register is flipped; its value can be restored with a `NOT` operation. If an immediate value is used, it is flipped at compile time.
+_**Warning:**_ The second register is flipped; its value can be restored with a `NOT` operation. If an immediate value is used, it is flipped at compile time.
 
 | p | q | AND |
 |---|---|-----|
@@ -127,7 +127,7 @@ This instruction performs a logical `AND` on the provided values, storing the re
 
 This instruction performs a logical `NAND` on the provided values, storing the result in the first register.
 
-**Warning:** The second register is flipped; its value can be restored with a `NOT` operation. If an immediate value is used, it is flipped at compile time.
+_**Warning:**_ The second register is flipped; its value can be restored with a `NOT` operation. If an immediate value is used, it is flipped at compile time.
 
 | p | q | AND |
 |---|---|-----|
