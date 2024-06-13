@@ -58,7 +58,7 @@ Due to the limited nature of this CPU, it does not make sense to write raw machi
 I've written a compiled language to aid development; however, it does not contain any abstractions that could hurt performance.
 
 > [!Warning]
-> Many instructions have **side effects** see:&nbsp; _**AND**_, _**NAND**_
+> Many instructions have **side effects** see:&nbsp; _**AND**_, _**NAND**_, _**NXOR**_
 
 
 **Logic Instructions:**
@@ -210,6 +210,55 @@ This instruction performs a logical `NOR` on the provided values, storing the re
 
 **Example:**
 ```
+00-00-10
+```
+
+</details>
+
+
+<details>
+  <summary><b><code> NXOR A 0x27 </code></b></summary>
+&nbsp;
+
+This instruction performs a logical \[`NXOR`, `XNOR`, `ENOR`, `EXNOR`, or `XAND`\] on the provided values, storing the result in the first register.
+
+_**Warning:**_ An extra register will be overwritten; this is true even if an immediate value is used.
+
+| p | q | NXOR |
+|---|---|------|
+| 1 | 1 |  1   |
+| 1 | 0 |  0   |
+| 0 | 1 |  0   |
+| 0 | 0 |  1   |
+
+
+**This can be done with:**
+
+1. `NOR C 11-11-11`
+
+2. `NOR C A`
+
+3. `NOR C C`
+
+4. `NOR C 0x27`
+
+5. `NOR A C`
+
+6. `NOR C 0x27`
+
+7. `NOR A C`
+
+**Example:**
+```
+00-10-11
+11-11-11
+00-10-00
+00-10-10
+00-10-11
+10-01-11
+00-00-10
+00-10-11
+10-01-11
 00-00-10
 ```
 
