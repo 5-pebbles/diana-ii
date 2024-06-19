@@ -1,7 +1,6 @@
 use crate::{
     error::Error,
     instructions::{Instruction, Operation, Register},
-    utils::tuple_as_usize,
     Args,
 };
 use arbitrary_int::u6;
@@ -34,10 +33,10 @@ impl Cpu {
             Register::A => Ok(self.a),
             Register::B => Ok(self.b),
             Register::C => Ok(self.c),
-            Register::Immediate => {
+            Register::Immediate => self.memory.get(self.memory.pc.as_tuple()).and_then(|v| {
                 self.memory.pc.increment();
-                self.memory.get(self.memory.pc.as_tuple())
-            }
+                Ok(v)
+            }),
         }
     }
 
@@ -55,6 +54,7 @@ impl Cpu {
     pub fn cycle(&mut self) -> Result<(), Error> {
         let instruction =
             Instruction::new_with_raw_value(self.memory.get(self.memory.pc.as_tuple())?);
+        self.memory.pc.increment();
         let one = self.get_register(instruction.one())?;
         let two = self.get_register(instruction.two())?;
 
@@ -64,26 +64,12 @@ impl Cpu {
             Operation::LOAD => self.c = self.memory.get((one, two))?,
             Operation::STORE => self.memory.set((one, two), self.c)?,
         }
-        self.memory.pc.increment();
         Ok(())
     }
 
     pub fn execute(&mut self, args: Args) -> Result<(), Error> {
-        let mut limit = args.limit;
-        loop {
-            if let Some(mut value) = limit {
-                if value == 0 {
-                    break;
-                }
-                value -= 1;
-                limit = Some(value);
-            }
-
+        for _ in 0..100 {
             self.cycle()?;
-
-            if tuple_as_usize(self.memory.pc.as_tuple()) >= args.break_point.unwrap() {
-                break;
-            }
         }
 
         self.debug();

@@ -1,8 +1,8 @@
 [package]
-name = "diana-exe"
+name = "dianac"
 version = "0.1.0"
 edition = "2021"
-description = "An emulator for the Diana CPU"
+description = "An emulator and compiler for the Diana CPU"
 
 readme = "../README.md"
 
