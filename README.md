@@ -45,7 +45,8 @@ There are a total of 4096 unique address each containing 6 bits.
 
 |     Address     |  Description  |
 |-----------------|---------------|
-| `0x000..=0xF3D` | General purpose RAM. |
+| `0x000..=0xEFF` | General purpose RAM. |
+| `0xEFF..=0xF3D` | Reserved for future use. |
 | `0xF3E..=0xF3F` | Program Counter(PC) (ROM). |
 | `0xF80..=0xFBF` | Left shift lookup table (ROM). |
 | `0xFC0..=0xFFF` | Right shift lookup table (ROM). |
