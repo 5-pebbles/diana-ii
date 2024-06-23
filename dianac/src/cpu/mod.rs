@@ -68,7 +68,7 @@ impl Cpu {
     }
 
     pub fn execute(&mut self, args: Args) -> Result<(), Error> {
-        for _ in 0..100 {
+        for _ in 0..200 {
             self.cycle()?;
         }
 

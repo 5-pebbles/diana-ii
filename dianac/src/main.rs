@@ -13,6 +13,9 @@ use error::Error;
 mod cpu;
 use cpu::Cpu;
 
+mod comp;
+use comp::compile_to_binary;
+
 mod instructions;
 mod utils;
 
@@ -44,27 +47,22 @@ fn parse_program(program: String) -> Vec<u6> {
         .collect()
 }
 
-fn emulate(args: Args) -> Result<()> {
+fn main() -> Result<()> {
+    let args = Args::parse();
+
     // read input
     let mut program = String::new();
     io::stdin().read_to_string(&mut program)?;
 
-    // parse input
-    let instructions: Vec<u6> = parse_program(program);
-
-    // execute
-    let mut cpu = Cpu::new(instructions);
-    cpu.execute(args)?;
-    Ok(())
-}
-
-fn main() -> Result<()> {
-    let args = Args::parse();
-
     if let Some(Sub::Emulate) = args.command {
-        emulate(args)?;
+        // parse input
+        let instructions: Vec<u6> = parse_program(program);
+
+        // execute
+        let mut cpu = Cpu::new(instructions);
+        cpu.execute(args)?;
     } else {
-        unimplemented!();
+        println!("{}", compile_to_binary(program)?)
     }
 
     Ok(())
