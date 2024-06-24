@@ -1,18 +1,10 @@
-use crate::comp;
+use arbitrary_int::u6;
 
 #[derive(Debug)]
 pub enum Error {
-    InvalidMemoryAddress,
     AttemptToModifyImmediateValue,
-    AttemptToModifyROM,
+    AttemptToModifyROM(u6, u6),
     IoError(String),
-    Compilation(comp::Error),
-}
-
-impl From<comp::Error> for Error {
-    fn from(value: comp::Error) -> Self {
-        Self::Compilation(value)
-    }
 }
 
 impl From<std::io::Error> for Error {

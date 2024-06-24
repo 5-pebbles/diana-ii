@@ -32,7 +32,7 @@ impl Memory {
             0xF3F => self.pc.1,
             0xF80..=0xFBF => index.1.wrapping_shl(1),
             0xFC0..=0xFFF => index.1.wrapping_shr(1),
-            _ => Err(Error::InvalidMemoryAddress)?,
+            _ => unreachable!(),
         })
     }
 
@@ -41,8 +41,8 @@ impl Memory {
 
         match address {
             0x000..=0xF3D => self.ram[address] = value,
-            0xF3E..=0xFFF => Err(Error::AttemptToModifyROM)?,
-            _ => Err(Error::InvalidMemoryAddress)?,
+            0xF3E..=0xFFF => return Err(Error::AttemptToModifyROM(index.0, index.1)),
+            _ => unreachable!(),
         }
 
         Ok(())
