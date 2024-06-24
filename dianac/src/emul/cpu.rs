@@ -1,15 +1,10 @@
-use crate::{
-    error::Error,
-    instructions::{Instruction, Operation, Register},
-    Args,
-};
 use arbitrary_int::u6;
 
-mod memory;
-use memory::Memory;
-
-mod program_counter;
-use program_counter::ProgramCounter;
+use crate::emul::{
+    error::Error,
+    instructions::{Instruction, Operation, Register},
+    memory::Memory,
+};
 
 pub struct Cpu {
     a: u6,
@@ -67,7 +62,7 @@ impl Cpu {
         Ok(())
     }
 
-    pub fn execute(&mut self, args: Args) -> Result<(), Error> {
+    pub fn execute(&mut self) -> Result<(), Error> {
         for _ in 0..200 {
             self.cycle()?;
         }

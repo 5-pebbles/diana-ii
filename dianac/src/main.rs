@@ -1,23 +1,16 @@
-use arbitrary_int::u6;
 use clap::{Parser, Subcommand};
 use std::{
     io::{self, Read},
     str,
 };
 
-type Result<T> = std::result::Result<T, Error>;
+mod utils;
 
-mod error;
-use error::Error;
-
-mod cpu;
-use cpu::Cpu;
+mod emul;
+use emul::emulate_binary;
 
 mod comp;
 use comp::compile_to_binary;
-
-mod instructions;
-mod utils;
 
 /// An emulator and compiler for the Diana CPU
 ///
@@ -35,35 +28,18 @@ pub enum Sub {
     Emulate,
 }
 
-fn parse_program(program: String) -> Vec<u6> {
-    let mut bytes = program.into_bytes();
-    bytes.retain(|c| c == &b'1' || c == &b'0');
-
-    bytes
-        .chunks(6)
-        .map(|chunk| {
-            u6::new(u8::from_str_radix(str::from_utf8(chunk).unwrap(), 2).expect("Expected Binary"))
-        })
-        .collect()
-}
-
-fn main() -> Result<()> {
+fn main() {
     let args = Args::parse();
 
     // read input
     let mut program = String::new();
-    io::stdin().read_to_string(&mut program)?;
+    io::stdin()
+        .read_to_string(&mut program)
+        .expect("Failed to read input");
 
     if let Some(Sub::Emulate) = args.command {
-        // parse input
-        let instructions: Vec<u6> = parse_program(program);
-
-        // execute
-        let mut cpu = Cpu::new(instructions);
-        cpu.execute(args)?;
+        println!("{:#?}", emulate_binary(program));
     } else {
-        println!("{}", compile_to_binary(program)?)
+        println!("{:#?}", compile_to_binary(program));
     }
-
-    Ok(())
 }

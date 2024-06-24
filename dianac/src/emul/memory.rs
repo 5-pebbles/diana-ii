@@ -1,6 +1,9 @@
 use arbitrary_int::u6;
 
-use crate::{cpu::ProgramCounter, utils::tuple_as_usize, Error};
+use crate::{
+    emul::{program_counter::ProgramCounter, Error},
+    utils::tuple_as_usize,
+};
 
 const RAM_SIZE: usize = 3902;
 
