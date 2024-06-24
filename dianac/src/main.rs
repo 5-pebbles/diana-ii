@@ -14,18 +14,20 @@ use comp::compile_to_binary;
 
 /// An emulator and compiler for the Diana CPU
 ///
-/// The compile and run a program use `<input> | dianac | dianac emulate`
+/// The compile and run a program use `<input> | dianac`
 #[derive(Parser)]
 #[command(version, about, propagate_version = true)]
 pub struct Args {
     #[command(subcommand)]
-    command: Option<Sub>,
+    sub_command: Option<Sub>,
 }
 
 #[derive(Subcommand)]
 pub enum Sub {
-    /// Emulate running a binary program
+    /// Emulate the execution of a binary
     Emulate,
+    /// Compile a binary without running it
+    Compile,
 }
 
 fn main() {
@@ -37,9 +39,9 @@ fn main() {
         .read_to_string(&mut program)
         .expect("Failed to read input");
 
-    if let Some(Sub::Emulate) = args.command {
-        println!("{:#?}", emulate_binary(program));
-    } else {
-        println!("{:#?}", compile_to_binary(program));
+    match args.sub_command {
+        Some(Sub::Emulate) => println!("{:#?}", emulate_binary(program)),
+        Some(Sub::Compile) => println!("{}", compile_to_binary(program).unwrap()),
+        None => emulate_binary(compile_to_binary(program).unwrap()).unwrap(),
     }
 }
