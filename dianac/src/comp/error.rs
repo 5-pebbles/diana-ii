@@ -28,15 +28,17 @@ impl CompilationError {
 
 impl fmt::Display for CompilationError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let line_number = self.line_number.to_string();
+
         let header = format!("{}: {}", "Error".red(), self.kind).bold();
 
-        let prefix = format!(" {} |", " ".repeat(self.line_number.to_string().len()))
+        let prefix = format!(" {} |", " ".repeat(line_number.len()))
             .blue()
             .bold();
 
         let line_details = format!(
             "{}{}",
-            format!(" {} | ", self.line_number).blue().bold(),
+            format!(" {} | ", line_number).blue().bold(),
             self.raw_text
         );
 
