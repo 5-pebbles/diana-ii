@@ -1,15 +1,30 @@
 mod lexer;
-use lexer::{lex_line, Token};
+use lexer::{lex_line, LexicalLine};
 
 mod error;
-pub use error::Error;
+use error::CompilationError;
 
-pub fn compile_to_binary(program: String) -> Result<String, Error> {
-    dbg!(program
+pub fn compile_to_binary(program: String) -> Result<String, Vec<CompilationError>> {
+    let mut errors: Vec<CompilationError> = Vec::new();
+
+    let lexical_lines: Vec<LexicalLine> = program
         .to_uppercase()
         .lines()
-        .map(|s| lex_line(s))
-        .collect::<Result<Vec<_>, Error>>());
+        .enumerate()
+        .map(|(nr, line)| lex_line(line, nr))
+        .flat_map(|r| {
+            if r.is_err() {
+                errors.push(r.unwrap_err());
+                None
+            } else {
+                Some(r.unwrap())
+            }
+        })
+        .collect();
 
-    Ok("".to_string())
+    if errors.is_empty() {
+        Ok("".to_string())
+    } else {
+        Err(errors)
+    }
 }

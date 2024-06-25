@@ -41,7 +41,14 @@ fn main() {
 
     match args.sub_command {
         Some(Sub::Emulate) => println!("{:#?}", emulate_binary(program)),
-        Some(Sub::Compile) => println!("{}", compile_to_binary(program).unwrap()),
+        Some(Sub::Compile) => println!(
+            "{}",
+            compile_to_binary(program).unwrap_or_else(|v| v
+                .into_iter()
+                .map(|e| e.to_string())
+                .collect::<Vec<_>>()
+                .join("\n\n"))
+        ),
         None => emulate_binary(compile_to_binary(program).unwrap()).unwrap(),
     }
 }
