@@ -29,8 +29,20 @@ pub struct Instruction {
     pub two: Register,
 }
 
-impl std::fmt::Debug for Instruction {
+impl std::fmt::Display for Instruction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}{:?}{:?}", self.operation(), self.one(), self.two())
+    }
+}
+
+impl std::fmt::Debug for Instruction {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{:?}-{:?}-{:?}",
+            self.operation(),
+            self.one(),
+            self.two()
+        )
     }
 }
