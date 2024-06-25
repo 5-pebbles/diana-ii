@@ -2,33 +2,24 @@ use colored::Colorize;
 use std::fmt;
 use strum::Display as EnumDisplay;
 
+use super::raw_line::RawLine;
+
 #[derive(Debug)]
 pub struct CompilationError {
     pub kind: CompilationErrorKind,
-    pub line_number: usize,
-    pub raw_text: String,
+    pub line: RawLine,
     pub help: String,
 }
 
 impl CompilationError {
-    pub fn new(
-        kind: CompilationErrorKind,
-        line_number: usize,
-        raw_text: String,
-        help: String,
-    ) -> Self {
-        Self {
-            kind,
-            line_number,
-            raw_text,
-            help,
-        }
+    pub fn new(kind: CompilationErrorKind, line: RawLine, help: String) -> Self {
+        Self { kind, line, help }
     }
 }
 
 impl fmt::Display for CompilationError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let line_number = self.line_number.to_string();
+        let line_number = self.line.line_number.to_string();
 
         let header = format!("{}: {}", "Error".red(), self.kind).bold();
         let prefix = format!(" {} |", " ".repeat(line_number.len()))
@@ -37,7 +28,7 @@ impl fmt::Display for CompilationError {
         let line_details = format!(
             "{}{}",
             format!(" {} | ", line_number).blue().bold(),
-            self.raw_text
+            self.line.raw_text
         );
         let help = format!("{} {}", format!("{}:", "help".cyan()).bold(), self.help);
 

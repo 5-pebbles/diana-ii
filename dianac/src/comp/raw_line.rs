@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct RawLine {
     pub line_number: usize,
     pub raw_text: String,
