@@ -31,17 +31,14 @@ impl fmt::Display for CompilationError {
         let line_number = self.line_number.to_string();
 
         let header = format!("{}: {}", "Error".red(), self.kind).bold();
-
         let prefix = format!(" {} |", " ".repeat(line_number.len()))
             .blue()
             .bold();
-
         let line_details = format!(
             "{}{}",
             format!(" {} | ", line_number).blue().bold(),
             self.raw_text
         );
-
         let help = format!("{} {}", format!("{}:", "help".cyan()).bold(), self.help);
 
         write!(f, "{header}\n{prefix}\n{line_details}\n{prefix}\n{help}")
@@ -52,6 +49,5 @@ impl fmt::Display for CompilationError {
 #[strum(serialize_all = "snake_case")]
 pub enum CompilationErrorKind {
     ConstantOverflow,
-    InvalidOperator,
     UnexpectedCharacter,
 }
