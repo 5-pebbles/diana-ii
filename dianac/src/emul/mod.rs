@@ -8,9 +8,9 @@ mod cpu;
 use cpu::Cpu;
 
 mod error;
-use error::Error;
+use error::RuntimeError;
 
-pub fn emulate_binary(program: String) -> Result<(), Error> {
+pub fn emulate_binary(program: String) -> Result<(), RuntimeError> {
     let mut bytes = program.into_bytes();
     bytes.retain(|b| b == &b'1' || b == &b'0');
 

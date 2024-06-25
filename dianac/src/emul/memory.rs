@@ -1,7 +1,7 @@
 use arbitrary_int::u6;
 
 use crate::{
-    emul::{program_counter::ProgramCounter, Error},
+    emul::{program_counter::ProgramCounter, RuntimeError},
     utils::tuple_as_usize,
 };
 
@@ -23,7 +23,7 @@ impl Memory {
         }
     }
 
-    pub fn get(&self, index: (u6, u6)) -> Result<u6, Error> {
+    pub fn get(&self, index: (u6, u6)) -> Result<u6, RuntimeError> {
         let address: usize = tuple_as_usize(index);
 
         Ok(match address {
@@ -36,12 +36,12 @@ impl Memory {
         })
     }
 
-    pub fn set(&mut self, index: (u6, u6), value: u6) -> Result<(), Error> {
+    pub fn set(&mut self, index: (u6, u6), value: u6) -> Result<(), RuntimeError> {
         let address: usize = tuple_as_usize(index);
 
         match address {
             0x000..=0xF3D => self.ram[address] = value,
-            0xF3E..=0xFFF => return Err(Error::AttemptToModifyROM(index.0, index.1)),
+            0xF3E..=0xFFF => return Err(RuntimeError::AttemptToModifyROM(index.0, index.1)),
             _ => unreachable!(),
         }
 
