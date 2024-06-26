@@ -21,19 +21,25 @@ pub enum Register {
 
 #[bitfield(u6)]
 pub struct Instruction {
-    #[bits(4..=5, r)]
+    #[bits(4..=5, rw)]
     pub operation: Operation,
-    #[bits(2..=3, r)]
+    #[bits(2..=3, rw)]
     pub one: Register,
-    #[bits(0..=1, r)]
+    #[bits(0..=1, rw)]
     pub two: Register,
+}
+
+impl std::fmt::Display for Instruction {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}{:?}{:?}", self.operation(), self.one(), self.two())
+    }
 }
 
 impl std::fmt::Debug for Instruction {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{:?} {:?} {:?}",
+            "{:?}-{:?}-{:?}",
             self.operation(),
             self.one(),
             self.two()

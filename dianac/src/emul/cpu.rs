@@ -1,15 +1,10 @@
-use crate::{
-    error::Error,
-    instructions::{Instruction, Operation, Register},
-    Args,
-};
 use arbitrary_int::u6;
 
-mod memory;
-use memory::Memory;
-
-mod program_counter;
-use program_counter::ProgramCounter;
+use crate::emul::{
+    error::RuntimeError,
+    instructions::{Instruction, Operation, Register},
+    memory::Memory,
+};
 
 pub struct Cpu {
     a: u6,
@@ -28,7 +23,7 @@ impl Cpu {
         }
     }
 
-    fn get_register(&mut self, reg: Register) -> Result<u6, Error> {
+    fn get_register(&mut self, reg: Register) -> Result<u6, RuntimeError> {
         match reg {
             Register::A => Ok(self.a),
             Register::B => Ok(self.b),
@@ -40,18 +35,18 @@ impl Cpu {
         }
     }
 
-    fn set_register(&mut self, reg: Register, value: u6) -> Result<(), Error> {
+    fn set_register(&mut self, reg: Register, value: u6) -> Result<(), RuntimeError> {
         match reg {
             Register::A => self.a = value,
             Register::B => self.b = value,
             Register::C => self.c = value,
-            Register::Immediate => Err(Error::AttemptToModifyImmediateValue)?,
+            Register::Immediate => Err(RuntimeError::AttemptToModifyImmediateValue)?,
         }
 
         Ok(())
     }
 
-    pub fn cycle(&mut self) -> Result<(), Error> {
+    pub fn cycle(&mut self) -> Result<(), RuntimeError> {
         let instruction =
             Instruction::new_with_raw_value(self.memory.get(self.memory.pc.as_tuple())?);
         self.memory.pc.increment();
@@ -67,18 +62,16 @@ impl Cpu {
         Ok(())
     }
 
-    pub fn execute(&mut self, args: Args) -> Result<(), Error> {
-        for _ in 0..100 {
+    pub fn execute(&mut self) -> Result<String, RuntimeError> {
+        for _ in 0..200 {
             self.cycle()?;
         }
 
-        self.debug();
-
-        Ok(())
+        Ok(self.debug())
     }
 
-    pub fn debug(&self) {
-        println!("{:#?}", self);
+    pub fn debug(&self) -> String {
+        format!("{:#?}", self)
     }
 }
 
