@@ -62,18 +62,16 @@ impl Cpu {
         Ok(())
     }
 
-    pub fn execute(&mut self) -> Result<(), RuntimeError> {
+    pub fn execute(&mut self) -> Result<String, RuntimeError> {
         for _ in 0..200 {
             self.cycle()?;
         }
 
-        self.debug();
-
-        Ok(())
+        Ok(self.debug())
     }
 
-    pub fn debug(&self) {
-        println!("{:#?}", self);
+    pub fn debug(&self) -> String {
+        format!("{:#?}", self)
     }
 }
 

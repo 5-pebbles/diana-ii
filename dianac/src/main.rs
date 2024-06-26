@@ -10,7 +10,7 @@ mod emul;
 use emul::emulate_binary;
 
 mod comp;
-use comp::compile_to_binary;
+use comp::{compile_to_binary, error::errors_to_string};
 
 /// An emulator and compiler for the Diana CPU
 ///
@@ -43,12 +43,14 @@ fn main() {
         Some(Sub::Emulate) => println!("{:#?}", emulate_binary(program)),
         Some(Sub::Compile) => println!(
             "{}",
-            compile_to_binary(program).unwrap_or_else(|v| v
-                .into_iter()
-                .map(|e| e.to_string())
-                .collect::<Vec<_>>()
-                .join("\n\n"))
+            compile_to_binary(program).unwrap_or_else(|v| errors_to_string(v))
         ),
-        None => emulate_binary(compile_to_binary(program).unwrap()).unwrap(),
+        None => println!(
+            "{}",
+            match compile_to_binary(program) {
+                Ok(binary) => emulate_binary(binary).unwrap(),
+                Err(errors) => errors_to_string(errors),
+            }
+        ),
     }
 }

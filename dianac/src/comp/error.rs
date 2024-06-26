@@ -4,6 +4,13 @@ use strum::Display as EnumDisplay;
 
 use super::raw_line::RawLine;
 
+pub fn errors_to_string(errors: impl IntoIterator<Item = CompilationError>) -> String {
+    errors.into_iter().fold(String::new(), |mut s, e| {
+        s.push_str(&format!("\n{e}"));
+        s
+    })
+}
+
 #[derive(Debug)]
 pub struct CompilationError {
     pub kind: CompilationErrorKind,

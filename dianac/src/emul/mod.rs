@@ -10,7 +10,7 @@ use cpu::Cpu;
 mod error;
 use error::RuntimeError;
 
-pub fn emulate_binary(program: String) -> Result<(), RuntimeError> {
+pub fn emulate_binary(program: String) -> Result<String, RuntimeError> {
     let mut bytes = program.into_bytes();
     bytes.retain(|b| b == &b'1' || b == &b'0');
 
@@ -27,7 +27,5 @@ pub fn emulate_binary(program: String) -> Result<(), RuntimeError> {
 
     // execute
     let mut cpu = Cpu::new(instructions);
-    cpu.execute()?;
-
-    Ok(())
+    cpu.execute()
 }

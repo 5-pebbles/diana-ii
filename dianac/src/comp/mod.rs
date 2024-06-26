@@ -4,7 +4,7 @@ use raw_line::RawLine;
 mod lexer;
 use lexer::{lex_line, tokens::Token};
 
-mod error;
+pub mod error;
 use error::CompilationError;
 
 pub fn compile_to_binary(program: String) -> Result<String, Vec<CompilationError>> {
@@ -18,6 +18,11 @@ pub fn compile_to_binary(program: String) -> Result<String, Vec<CompilationError
         .collect();
 
     let lexical_lines: Vec<Vec<Token>> = lines.iter().map(|l| lex_line(l)).collect();
+    errors.push(CompilationError::new(
+        error::CompilationErrorKind::ConstantOverflow,
+        lines[0].clone(),
+        "test123".to_string(),
+    ));
 
     dbg!(&lexical_lines);
     dbg!(&errors);
