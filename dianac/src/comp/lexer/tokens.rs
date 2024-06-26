@@ -6,7 +6,6 @@ pub enum Token {
     Constant(Constant),
     Identifier(Identifier),
     Keyword(Keyword),
-    Lable(String),
     Operator(Operator),
     Separator(Separator),
 }
@@ -16,6 +15,7 @@ pub enum Constant {
     Binary(String),
     Decimal(String),
     Hex(String),
+    Lable(String),
 }
 
 #[derive(EnumString, Debug)]
@@ -61,6 +61,10 @@ pub enum Keyword {
 
 #[derive(Debug)]
 pub enum Operator {
+    // Bits
+    Or,
+    Not,
+    // Comparison
     Equal,
     Greater,
     GreaterOrEqual,

@@ -1,8 +1,6 @@
-use std::{iter::Peekable, str::FromStr};
-
-use crate::comp::lexer::tokens::{Constant, Token};
-
 use super::tokens::{Identifier, Keyword, Operator, Separator};
+use crate::comp::lexer::tokens::{Constant, Token};
+use std::{iter::Peekable, str::FromStr};
 
 // TODO: we can use a type aliase after https://github.com/rust-lang/rust/issues/63063
 
@@ -60,7 +58,7 @@ pub fn lex_word(characters: &mut Peekable<impl Iterator<Item = char>>) -> Token 
         return Token::Keyword(keyword);
     }
 
-    Token::Lable(word)
+    Token::Constant(Constant::Lable(word))
 }
 
 pub fn lex_operator(characters: &mut Peekable<impl Iterator<Item = char>>) -> Token {
@@ -68,17 +66,19 @@ pub fn lex_operator(characters: &mut Peekable<impl Iterator<Item = char>>) -> To
 
     if characters.peek() == Some(&'=') {
         characters.next();
-        Token::Operator(match first {
-            '>' => Operator::GreaterOrEqual,
-            '<' => Operator::LessOrEqual,
-            '!' => Operator::NotEqual,
-            '=' => Operator::Equal,
-            _ => unreachable!(),
-        })
+        match first {
+            '>' => Token::Operator(Operator::GreaterOrEqual),
+            '<' => Token::Operator(Operator::LessOrEqual),
+            '!' => Token::Operator(Operator::NotEqual),
+            '=' => Token::Operator(Operator::Equal),
+            _ => Token::Separator(Separator::Unexpected(first)),
+        }
     } else {
         match first {
             '>' => Token::Operator(Operator::Greater),
             '<' => Token::Operator(Operator::Less),
+            '!' => Token::Operator(Operator::Not),
+            '|' => Token::Operator(Operator::Or),
             _ => Token::Separator(Separator::Unexpected(first)),
         }
     }

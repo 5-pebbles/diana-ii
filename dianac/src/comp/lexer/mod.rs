@@ -21,7 +21,7 @@ pub fn lex_line(line: &RawLine) -> Vec<Token> {
             '$' => handlers::lex_hex,
             '0'..='9' => handlers::lex_decimal,
             'A'..='Z' => handlers::lex_word,
-            '<' | '>' | '!' | '=' => handlers::lex_operator,
+            '<' | '>' | '!' | '=' | '|' => handlers::lex_operator,
             _ => handlers::lex_separator,
         };
 
