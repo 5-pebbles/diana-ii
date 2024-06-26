@@ -63,25 +63,19 @@ pub fn lex_word(characters: &mut Peekable<impl Iterator<Item = char>>) -> Token 
 
 pub fn lex_operator(characters: &mut Peekable<impl Iterator<Item = char>>) -> Token {
     let first = characters.next().unwrap();
+    let mut peek_eq = |c: char| characters.next_if_eq(&c).is_some();
 
-    if characters.peek() == Some(&'=') {
-        characters.next();
-        match first {
-            '>' => Token::Operator(Operator::GreaterOrEqual),
-            '<' => Token::Operator(Operator::LessOrEqual),
-            '!' => Token::Operator(Operator::NotEqual),
-            '=' => Token::Operator(Operator::Equal),
-            _ => Token::Separator(Separator::Unexpected(first)),
-        }
-    } else {
-        match first {
-            '>' => Token::Operator(Operator::Greater),
-            '<' => Token::Operator(Operator::Less),
-            '!' => Token::Operator(Operator::Not),
-            '|' => Token::Operator(Operator::Or),
-            _ => Token::Separator(Separator::Unexpected(first)),
-        }
-    }
+    Token::Operator(match first {
+        '>' if peek_eq('=') => Operator::GreaterOrEqual,
+        '<' if peek_eq('=') => Operator::LessOrEqual,
+        '!' if peek_eq('=') => Operator::NotEqual,
+        '=' if peek_eq('=') => Operator::Equal,
+        '>' => Operator::Greater,
+        '<' => Operator::Less,
+        '!' => Operator::Not,
+        '|' => Operator::Or,
+        _ => return Token::Separator(Separator::Unexpected(first)),
+    })
 }
 
 pub fn lex_separator(characters: &mut Peekable<impl Iterator<Item = char>>) -> Token {
